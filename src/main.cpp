@@ -82,6 +82,10 @@ int main() {
     }
     std::string category = message->text.substr(3, message->text.length());
     auto filename = st->getCommuniceId(message->from->id, category);
+    if (filename == -1) {
+      bot.getApi().sendMessage(message->chat->id, "I have nothing to say yet :( PLease contact real me");
+      return;
+    }
     bot.getApi().sendAudio(message->chat->id,
                            InputFile::fromFile("voice/" + category + "/" + std::to_string(filename) + ".m4a", "audio"));
   });
